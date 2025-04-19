@@ -1,109 +1,73 @@
-Building Web Applications with Flask, Django, and Docker Compose
-Project Overview
-This project involves creating two web applications — one using Flask and the other using Django — and containerizing them using Docker. The two applications are:
+ Flask + Django + Docker Compose Web App
+This project demonstrates how to build simple Flask and Django web applications and containerize them using Docker Compose. It also includes a Jenkinsfile for CI/CD automation.
 
-Flask Application:
-
-Displays a "Hello, World!" message on the homepage.
-
-Includes a form to accept the user's name and age and returns a personalized greeting message.
-
-Implements basic error handling for invalid inputs.
-
-Django Application:
-
-Displays a list of items (e.g., books, tasks, products) stored in a database.
-
-Provides an admin panel for managing the items.
-
-Includes a form to add new items to the list.
-
-Both applications are containerized using Docker Compose and accessible on separate ports.
-
+ Features
+🔹 Flask App
+/ — Displays "Hello, World!"
+/greet — Accepts name and age via form, responds with a greeting
+Includes basic error handling for invalid inputs
+🔹 Django App
+Homepage shows a list of items (e.g., books, products, tasks)
+Admin panel to add/edit/delete items
+Homepage includes a form to add new items
+Backed by a SQLite database
+🔹 Docker Compose
+Separate containers for Flask and Django apps
+Flask runs on port 5000, Django on port 8000
 Project Structure
-Copy
-Edit
-├── flask/
-│   ├── app.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── django/
-│   ├── manage.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── docker-compose.yml
-├── README.md
-└── Jenkinsfile
-Requirements
-Docker: To containerize the applications.
+final_assignment/ ├── docker-compose.yml
+├── flask_app/
+│ ├── app.py
+│ ├── Dockerfile
+│ └── requirements.txt
+└── django_app/
+├── Dockerfile
+├── manage.py
+├── requirements.txt
+└── django_app/
+└── items/
 
-Docker Compose: To manage the multi-container setup.
-
-Python (Flask and Django dependencies):
-
-Flask (for the Flask application)
-
-Django (for the Django application)
-
-How to Run the Project Locally
-1. Clone the Repository
-Clone the repository to your local machine:
-
-bash
-Copy
-Edit
-git clone <your-github-repo-url>
-cd <your-repo-directory>
-2. Build and Run the Applications Using Docker Compose
-Make sure you have Docker and Docker Compose installed on your system.
-
-Run the following command to build and start both the Flask and Django containers:
-
-bash
-Copy
-Edit
+ Getting Started
+🛠 Prerequisites
+Python 3.9+
+Docker
+Docker Compose
+(Optional) Jenkins
+ Local Setup
+Step 1: Clone the Repo
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+Step 2: Run with Docker Compose
 docker-compose up --build
-This will:
+Step 3: Open in Browser
+Flask App: http://localhost:5000
 
-Build the Flask and Django images using their respective Dockerfile.
+Django App: http://localhost:8000
 
-Start the containers and make the applications accessible on separate ports.
+ Create Django Superuser (Optional for Admin Panel)
+docker ps                   # Get Django container name
+docker exec -it your_django_container python manage.py createsuperuser
+Then visit: http://localhost:8000/admin
 
-3. Access the Applications
-The Flask application will be accessible at http://localhost:5000.
+ Flask Application Details
+flask_app/app.py / route: Returns “Hello, World!”
 
-The Django application will be accessible at http://localhost:8000.
+/greet route: Accepts name & age via form; returns greeting
 
-4. Stopping the Containers
-To stop the containers, use the following command:
+Handles form validation errors
 
-bash
-Copy
-Edit
-docker-compose down
-Project Details
-Flask Application
-Homepage: Displays a "Hello, World!" message.
+ Django Application Details
+Homepage (Example View) Lists all items in the database
 
-Form: Accepts user input (name and age), then displays a personalized greeting.
+Contains a form to add new item
 
-Error Handling: Provides a message if the user inputs invalid data (e.g., non-numeric age).
+Model stored in items/models.py
 
-Django Application
-Homepage: Displays a list of items from the database (e.g., books, tasks, products).
+Admin Panel Login at /admin using superuser credentials
 
-Admin Panel: Allows admins to add, modify, or delete items from the list.
+Manage all models directly
 
-Add Item Form: Provides a form on the homepage to add new items to the list.
+ Deployment
+Push to GitHub: https://github.com/your-username/your-repo-name
 
-Docker Setup
-Dockerfile for Flask
-The Dockerfile for the Flask application includes steps to set up a Python environment, install the dependencies, and run the app.
-
-Dockerfile for Django
-The Dockerfile for the Django application sets up a Python environment, installs the necessary dependencies, and starts the Django server.
-
-docker-compose.yml
-This file defines the services (Flask and Django), their build contexts, and the ports each application should be exposed on.
-
-
+Push Docker images to Docker Hub:
